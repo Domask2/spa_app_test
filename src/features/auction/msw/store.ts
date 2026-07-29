@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
-import type {Auction} from "../../../entities/auction/types.ts";
-import type {Bet} from "../../../entities/bet/types.ts";
+import type {Auction, Bet} from "../types";
 
-// Простая имитация базы данных в памяти
 export const store = {
     auctions: [] as Auction[],
     bets: {} as Record<string, Bet[]>, // ключ – auctionUuid

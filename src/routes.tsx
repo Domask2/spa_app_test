@@ -1,6 +1,6 @@
 import { createRouter, createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
-import {AuctionsListPage} from "./pages/auctions/list/AuctionsListPage.tsx";
-import {AuctionDetailPage} from "./pages/auctions/detail/AuctionDetailPage.tsx";
+import {AuctionsListPage} from "./pages/auctionsList/AuctionsListPage.tsx";
+import {AuctionDetailPage} from "./pages/auctionDetail/AuctionDetailPage.tsx";
 
 const rootRoute = createRootRoute({
     component: () => (

@@ -10,13 +10,13 @@ export type AuctionType = 'Request' | 'Up' | 'Down' | 'FixPrice';
 export interface RoutePoint {
     city: string;
     address?: string | null;
-    date: string; // ISO
+    date: string;
 }
 
 export interface Cargo {
     name: string;
-    weight: number; // кг
-    volume: number; // м³
+    weight: number;
+    volume: number;
     bodyType: string;
 }
 
@@ -51,7 +51,19 @@ export interface Auction {
     hideBetsHistory: boolean;
     hidePointsAddressAndContacts: boolean;
     noViewCargoPrice: boolean;
-    // дополнительные поля для деталки
     createdAt: string;
     updatedAt: string;
+}
+
+export interface Bet {
+    uuid: string;
+    auctionUuid: string;
+    price: number;
+    priceWithVat?: number | null;
+    carrierName: string;
+    rank?: number | null;
+    isWinner?: boolean;
+    isCancelled?: boolean;
+    cancellationReason?: string | null;
+    createdAt: string;
 }
