@@ -9,7 +9,7 @@ interface ListResponse {
     total: number;
 }
 
-export function useAuctionList(filters: FilterValues, cursor?: string) {
+export function useAuctionList(filters: FilterValues, cursor?: string, options?: { enabled?: boolean }) {
     return useQuery<ListResponse>({
         queryKey: ['auctions', filters, cursor],
         queryFn: async () => {
@@ -20,5 +20,6 @@ export function useAuctionList(filters: FilterValues, cursor?: string) {
             return response.json();
         },
         placeholderData: keepPreviousData,
+        ...options
     });
 }

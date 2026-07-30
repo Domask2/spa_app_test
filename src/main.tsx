@@ -1,15 +1,32 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from "./App.tsx";
-import './styles/globals.css';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './styles/globals.css'
 
-if (import.meta.env.DEV) {
-    const { worker } = await import('./mocks/browser');
-    worker.start({ onUnhandledRequest: 'bypass' });
+async function enableMocking() {
+    if (!import.meta.env.DEV) {
+        return
+    }
+
+    const { worker } = await import('./mocks/browser')
+    console.info('Запуск MSW...');
+    await worker.start(
+        {
+            onUnhandledRequest: 'warn',
+            serviceWorker: {
+                url: '/mockServiceWorker.js',
+            },
+        }
+    )
+
+    await new Promise(resolve => setTimeout(resolve, 1));
+    console.info('MSW ready');
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-      <App/>
-  </StrictMode>,
-)
+enableMocking().then(() => {
+    ReactDOM.createRoot(document.getElementById('root')!).render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    )
+})

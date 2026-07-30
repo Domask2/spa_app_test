@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import {faker} from '@faker-js/faker';
 import type {Auction, Bet} from "../types";
 
 export const store = {
@@ -12,12 +12,11 @@ export const store = {
     },
 
     seed() {
-        // Генерация 20 аукционов
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 40; i++) {
             const uuid = faker.string.uuid();
             const statuses: Auction['status'][] = ['draft', 'active', 'closed', 'cancelled', 'completed'];
             const types: Auction['type'][] = ['Request', 'Up', 'Down', 'FixPrice'];
-            const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород'];
+            const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород', 'Псков', 'Пермь', 'Омск'];
 
             const loadCity = faker.helpers.arrayElement(cities);
             let unloadCity = faker.helpers.arrayElement(cities);
@@ -42,18 +41,18 @@ export const store = {
                 },
                 cargo: {
                     name: faker.commerce.productName(),
-                    weight: faker.number.int({ min: 500, max: 20000 }),
-                    volume: faker.number.int({ min: 10, max: 100 }),
+                    weight: faker.number.int({min: 500, max: 20000}),
+                    volume: faker.number.int({min: 10, max: 100}),
                     bodyType: faker.helpers.arrayElement(['Тент', 'Рефрижератор', 'Цельнометаллический', 'Открытый']),
                 },
-                currentPrice: faker.number.int({ min: 10000, max: 500000 }),
-                pricePerKm: faker.number.int({ min: 50, max: 200 }),
-                betStep: faker.number.int({ min: 1000, max: 5000 }),
+                currentPrice: faker.number.int({min: 10000, max: 500000}),
+                pricePerKm: faker.number.int({min: 50, max: 200}),
+                betStep: faker.number.int({min: 1000, max: 5000}),
                 minPrice: null,
                 maxPrice: null,
                 isAvailable: faker.datatype.boolean(),
                 isBidder: faker.datatype.boolean(),
-                tradingStatus: faker.helpers.arrayElement(['Leading', 'Losing', 'Winner', 'NotParticipating', null]),
+                tradingStatus: faker.helpers.arrayElement(['Leading', 'Losing', 'Winner', 'NotParticipating']),
                 myBetExists: faker.datatype.boolean(),
                 organizer: {
                     name: faker.company.name(),
@@ -70,14 +69,14 @@ export const store = {
             };
             this.auctions.push(auction);
             // Генерируем ставки для каждого аукциона (от 0 до 5)
-            const betCount = faker.number.int({ min: 0, max: 5 });
+            const betCount = faker.number.int({min: 0, max: 5});
             const bets: Bet[] = [];
             for (let j = 0; j < betCount; j++) {
                 bets.push({
                     uuid: faker.string.uuid(),
                     auctionUuid: uuid,
-                    price: faker.number.int({ min: 5000, max: 300000 }),
-                    priceWithVat: faker.number.int({ min: 5000, max: 300000 }),
+                    price: faker.number.int({min: 5000, max: 300000}),
+                    priceWithVat: faker.number.int({min: 5000, max: 300000}),
                     carrierName: faker.company.name(),
                     rank: j + 1,
                     isWinner: j === 0,
