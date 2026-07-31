@@ -7,8 +7,12 @@ export function useBets(auctionUuid: string) {
         queryKey: ['bets', auctionUuid],
         queryFn: async () => {
             const response = await requestBuilder(`/auctions/${auctionUuid}/bets`, { method: 'GET' });
+            if (!response.ok) {
+                throw new Error(`Ошибка загрузки ставок: ${response.status}`);
+            }
             return response.json();
         },
         enabled: !!auctionUuid,
+        retry: 1,
     });
 }

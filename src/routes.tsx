@@ -1,6 +1,7 @@
 import { createRouter, createRootRoute, createRoute, Outlet } from '@tanstack/react-router';
 import {AuctionsListPage} from "./pages/auctionsList/AuctionsListPage.tsx";
 import {AuctionDetailPage} from "./pages/auctionDetail/AuctionDetailPage.tsx";
+import {BetsPage} from "./pages/bets/BetsPage.tsx";
 
 const rootRoute = createRootRoute({
     component: () => (
@@ -23,6 +24,12 @@ const detailRoute = createRoute({
     component: AuctionDetailPage,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, detailRoute]);
+const betsRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/auctions/$auctionUuid/bets',
+    component: BetsPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, detailRoute, betsRoute]);
 
 export const router = createRouter({ routeTree });

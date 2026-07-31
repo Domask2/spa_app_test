@@ -4,9 +4,9 @@ import App from './App'
 import './styles/globals.css'
 
 async function enableMocking() {
-    if (!import.meta.env.DEV) {
-        return
-    }
+    // if (!import.meta.env.DEV) {
+    //     return
+    // }
 
     const { worker } = await import('./mocks/browser')
     console.info('Запуск MSW...');
@@ -19,7 +19,6 @@ async function enableMocking() {
         }
     )
 
-    await new Promise(resolve => setTimeout(resolve, 1));
     console.info('MSW ready');
 }
 
