@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const filtersSchema = z.object({
     cargo_num: z.string().optional(),
-    status: z.enum(['draft', 'active', 'closed', 'cancelled', 'completed']).optional(),
+    status: z.enum(['active', 'closed', 'cancelled']).optional(),
     statuses: z.array(z.enum(['draft', 'active', 'closed', 'cancelled', 'completed'])).optional(),
     auc_type: z.enum(['Request', 'Up', 'Down', 'FixPrice']).optional(),
     load_city: z.string().optional(),

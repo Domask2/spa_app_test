@@ -4,7 +4,7 @@ import { Input } from '../../../shared/ui/Input';
 import {Button} from "../../../shared/ui/Button.tsx";
 
 const cityOptions = ['Москва', 'Санкт-Петербург', 'Казань', 'Новосибирск', 'Екатеринбург', 'Нижний Новгород'];
-const statusOptions = ['draft', 'active', 'closed', 'cancelled', 'completed'];
+const statusOptions = ['active', 'closed', 'cancelled', 'completed'];
 const typeOptions = ['Request', 'Up', 'Down', 'FixPrice'];
 
 interface FiltersProps {
