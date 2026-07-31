@@ -1,9 +1,7 @@
 export type AuctionStatus =
-    | 'draft'
     | 'active'
     | 'closed'
-    | 'cancelled'
-    | 'completed';
+    | 'cancelled';
 
 export type AuctionType = 'Request' | 'Up' | 'Down' | 'FixPrice';
 
@@ -39,6 +37,7 @@ export interface Auction {
     currentPrice: number;
     pricePerKm: number;
     betStep: number;
+    betsCount: number;
     minPrice?: number | null;
     maxPrice?: number | null;
     isAvailable: boolean;

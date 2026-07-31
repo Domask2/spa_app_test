@@ -3,7 +3,6 @@ import {store} from './store';
 import type {FilterValues} from "../../../pages/auctionsList/model/filters.schema.ts";
 import type {Auction} from "../types";
 
-// Вспомогательные фильтры (упрощённые)
 function filterAuctions(filters: Partial<FilterValues>): Auction[] {
     let list = store.auctions;
     if (filters.cargo_num) {
@@ -32,7 +31,7 @@ function filterAuctions(filters: Partial<FilterValues>): Auction[] {
         const toDate = new Date(filters.load_date_to);
         list = list.filter(a => new Date(a.route.load.date) <= toDate);
     }
-    if (filters.is_available !== undefined) {
+    if (filters.is_available) {
         list = list.filter(a => a.isAvailable === filters.is_available);
     }
     if (filters.is_bidder !== undefined) {
@@ -76,9 +75,9 @@ export const handlers = [
         const {uuid} = params;
         const uuidStr = Array.isArray(uuid) ? uuid[0] : uuid;
         if (!uuidStr) {
-            return new HttpResponse(JSON.stringify({message: 'Invalid auction UUID'}), {status: 400});
+            return new HttpResponse(null, { status: 404 });
         }
-        const bets = store.bets[uuidStr] || [];
+        const bets = store.getBets(uuidStr);
         return HttpResponse.json(bets);
     }),
 
