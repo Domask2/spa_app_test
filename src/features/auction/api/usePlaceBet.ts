@@ -12,20 +12,23 @@ export function usePlaceBet(auctionUuid: string) {
                 method: 'POST',
                 body: JSON.stringify(data),
             });
+
             if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Ошибка при размещении ставки');
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `Ошибка ${response.status}`);
             }
+
             return response.json();
         },
         onSuccess: () => {
             toast.success('Ставка успешно размещена!');
-            queryClient.invalidateQueries({queryKey: ['auctions']});
-            queryClient.invalidateQueries({queryKey: ['auction', auctionUuid]});
-            queryClient.invalidateQueries({queryKey: ['bets', auctionUuid]});
+            // Инвалидируем все связанные запросы
+            queryClient.invalidateQueries({ queryKey: ['auctions'] });
+            queryClient.invalidateQueries({ queryKey: ['auction', auctionUuid] });
+            queryClient.invalidateQueries({ queryKey: ['bets', auctionUuid] });
         },
         onError: (error: Error) => {
-            toast.error(error.message || 'Не удалось разместить ставку');
+            toast.error(error.message || 'Не удалось разместить ставку. Попробуйте снова.');
         },
     });
 }
