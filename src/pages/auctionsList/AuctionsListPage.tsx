@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useSearch, useNavigate } from '@tanstack/react-router';
-
 import { filtersSchema, type FilterValues } from './model/filters.schema';
 import { Filters } from './components/Filters';
 import { AuctionCard } from './components/AuctionCard';
 import { Pagination } from './components/Pagination';
 import { useAuctionList } from "../../features/auction/api/useAuctionList.ts";
-import { Skeleton } from "../../shared/ui/Skeleton.tsx";
+import { AuctionsListSkeleton } from "./components/AuctionsListSkeleton.tsx";
+
 
 export function AuctionsListPage() {
 	const search = useSearch({from: '/'}) as Partial<FilterValues>;
@@ -22,6 +22,12 @@ export function AuctionsListPage() {
 	const {data, isLoading, isError, refetch} = useAuctionList(filters, currentCursor, {
 		enabled: filtersReady,
 	});
+
+	const {items, total, nextCursor} = data || {items: [], total: 0, nextCursor: null};
+
+	const currentPage = cursors.length + 1;
+	const hasNext = !!nextCursor;
+	const hasPrev = cursors.length > 0;
 
 	const handleFilterChange = (newFilters: FilterValues) => {
 		navigate({
@@ -46,7 +52,9 @@ export function AuctionsListPage() {
 		}
 	};
 
-	if (isLoading && !data) return <Skeleton count={5}/>;
+	if (isLoading && !data) {
+		return <AuctionsListSkeleton />;
+	}
 
 	if (isError) {
 		return (
@@ -59,26 +67,23 @@ export function AuctionsListPage() {
 		);
 	}
 
-	const {items, total, nextCursor} = data || {items: [], total: 0, nextCursor: null};
-
-	const currentPage = cursors.length + 1;
-	const hasNext = !!nextCursor;
-	const hasPrev = cursors.length > 0;
-
 	return (
 		<div>
 			<Filters
 				initialFilters={filters}
 				onChange={handleFilterChange}
 			/>
+
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 items-stretch">
 				{items.map((auction) => (
 					<AuctionCard key={auction.uuid} auction={auction}/>
 				))}
 			</div>
+
 			{items.length === 0 && (
 				<div className="text-center py-10 text-gray-500">Нет аукционов, соответствующих фильтрам</div>
 			)}
+
 			<Pagination
 				hasNext={hasNext}
 				hasPrev={hasPrev}
