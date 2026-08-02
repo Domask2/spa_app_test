@@ -5,9 +5,9 @@ import './styles/globals.css'
 import { setMswReady } from './store/mswStore'
 
 async function enableMocking() {
-	// if (!import.meta.env.DEV) {
- 	//     return
- 	// }
+	if (!import.meta.env.DEV) {
+ 	    return
+ 	}
 
 	try {
 		const {worker} = await import('./mocks/browser');
