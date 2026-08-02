@@ -3,6 +3,7 @@ import { useAuctionDetail } from "../../features/auction/api/useAuctionDetail.ts
 import { useBets } from "../../features/auction/api/useBets.ts";
 import { Skeleton } from "../../shared/ui/Skeleton.tsx";
 import { formatCurrency } from "../../shared/lib/formatters.ts";
+import { BackButton } from "../../shared/ui/BackButton.tsx";
 
 export function BetsPage() {
 	const {auctionUuid} = useParams({from: '/auctions/$auctionUuid/bets'});
@@ -36,19 +37,11 @@ export function BetsPage() {
 		<div className="space-y-6">
 			{/* Кнопка "Назад" */}
 			<div className="flex items-center gap-4">
-				<Link
-					to="/"
-					className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
-				>
-					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-							  d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-					</svg>
-					Назад к списку
-				</Link>
+				<BackButton/>
+
 				<span className="text-sm text-gray-500">
-          Аукцион #{cargoNum} — Ставки
-        </span>
+         		 	Аукцион #{cargoNum}
+        		</span>
 			</div>
 
 			{/* Навигация между страницами */}

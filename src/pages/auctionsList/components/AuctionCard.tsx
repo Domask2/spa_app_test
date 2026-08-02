@@ -12,15 +12,10 @@ export function AuctionCard({auction}: AuctionCardProps) {
 		closed: 'bg-red-200 text-red-700',
 		cancelled: 'bg-yellow-200 text-yellow-700',
 	};
+
 	const color = auction.status ? statusColor[auction.status] : 'bg-gray-200 text-gray-600';
-
-	// Проверяем, завершён или отменён аукцион
 	const isClosedOrCancelled = auction.status === 'closed' || auction.status === 'cancelled';
-
-	// Можно ли делать ставку (только для активных аукционов)
 	const canPlaceBet = auction.canSetBet && auction.status === 'active';
-
-	// Можно ли смотреть ставки (если история не скрыта)
 	const canViewBets = !auction.hideBetsHistory;
 
 	let actionLabel: string;
@@ -28,9 +23,7 @@ export function AuctionCard({auction}: AuctionCardProps) {
 	let disabled = false;
 	let buttonColor: string;
 
-	// 1. Если аукцион активен и пользователь может делать ставку
 	if (canPlaceBet) {
-		// ✅ Если у пользователя уже есть ставка → "Изменить ставку"
 		if (auction.myBetExists) {
 			actionLabel = 'Изменить ставку';
 		} else {
@@ -39,13 +32,11 @@ export function AuctionCard({auction}: AuctionCardProps) {
 		actionHref = `/auctions/${auction.uuid}`;
 		buttonColor = 'bg-green-600 text-white hover:bg-green-700';
 	}
-	// 2. Если можно смотреть ставки (независимо от статуса аукциона)
 	else if (canViewBets) {
 		actionLabel = 'Смотреть ставки';
 		actionHref = `/auctions/${auction.uuid}/bets`;
 		buttonColor = 'bg-blue-600 text-white hover:bg-blue-700';
 	}
-	// 3. Всё остальное → disabled
 	else {
 		if (isClosedOrCancelled) {
 			actionLabel = auction.status === 'closed' ? 'Аукцион завершён' : 'Аукцион отменён';
@@ -60,7 +51,7 @@ export function AuctionCard({auction}: AuctionCardProps) {
 	return (
 		<div
 			className="flex flex-col justify-between h-full bg-white p-4 rounded shadow hover:shadow-lg transition-shadow space-y-2 overflow-hidden border border-gray-100">
-			{/* Верхняя часть – кликабельная ссылка на детальную страницу */}
+
 			<Link
 				to="/auctions/$auctionUuid"
 				params={{auctionUuid: auction.uuid}}

@@ -1,8 +1,10 @@
-import { Link, useParams } from '@tanstack/react-router';
+import { useParams } from '@tanstack/react-router';
 import { PlaceBetForm } from "./components/PlaceBetForm.tsx";
 import { useAuctionDetail } from "../../features/auction/api/useAuctionDetail.ts";
 import { AuctionInfo } from "./components/AuctionInfo.tsx";
 import { DetailSkeleton } from "./components/DetailSkeleton.tsx";
+import { BackButton } from "../../shared/ui/BackButton.tsx";
+import { AuctionTabs } from "../../shared/ui/AuctionTabs.tsx";
 
 export function AuctionDetailPage() {
 	const {auctionUuid} = useParams({from: '/auctions/$auctionUuid'});
@@ -37,18 +39,8 @@ export function AuctionDetailPage() {
 	return (
 		<div className="space-y-6">
 
-			{/* Кнопка "Назад" */}
 			<div className="flex items-center gap-4">
-				<Link
-					to="/"
-					className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
-				>
-					<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-							  d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-					</svg>
-					Назад к списку
-				</Link>
+				<BackButton />
 
 				<span className="text-sm text-gray-500">
           			Аукцион #{auction.cargoNum}
@@ -67,24 +59,24 @@ export function AuctionDetailPage() {
 				)}
 			</div>
 
-			{/* Навигация между страницами */}
-			<div className="flex gap-4 border-b pb-3">
-				<Link
-					to="/auctions/$auctionUuid"
-					params={{auctionUuid}}
-					className="px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600"
-				>
-					Информация об аукционе
-				</Link>
-				<Link
-					to="/auctions/$auctionUuid/bets"
-					params={{auctionUuid}}
-					className="px-4 py-2 font-medium text-gray-600 hover:text-blue-600"
-				>
-					Ставки {showBetsHistory && `(${betsCount || 0})`}
-					{!showBetsHistory && <span className="text-xs text-gray-400 ml-1">🔒</span>}
-				</Link>
-			</div>
+			<AuctionTabs
+				tabs={[
+					{
+						label: 'Информация об аукционе',
+						to: '/auctions/$auctionUuid',
+						params: { auctionUuid },
+						isActive: true,
+					},
+					{
+						label: 'Ставки',
+						to: '/auctions/$auctionUuid/bets',
+						params: { auctionUuid },
+						count: showBetsHistory ? betsCount : undefined,
+						isLocked: !showBetsHistory,
+						isActive: false,
+					},
+				]}
+			/>
 
 			{/* Основная информация */}
 			<AuctionInfo

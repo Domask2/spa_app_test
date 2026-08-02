@@ -42,7 +42,7 @@ export function AuctionInfo({auction, hidePointsAddressAndContacts, noViewCargoP
 						<span className="px-2 py-1 bg-gray-200 rounded text-sm">{status}</span>
 						{tradingStatus && (
 							<span className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">
-                {tradingStatus}
+                				{tradingStatus}
                             </span>
 						)}
 						{myBetExists && (

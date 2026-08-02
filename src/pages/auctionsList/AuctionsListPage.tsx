@@ -5,7 +5,8 @@ import { Filters } from './components/Filters';
 import { AuctionCard } from './components/AuctionCard';
 import { Pagination } from './components/Pagination';
 import { useAuctionList } from "../../features/auction/api/useAuctionList.ts";
-import { AuctionsListSkeleton } from "./components/AuctionsListSkeleton.tsx";
+import { FiltersSkeleton } from "../../shared/ui/FiltersSkeleton.tsx";
+import { SkeletonCard } from "../../shared/ui/SkeletonCard.tsx";
 
 
 export function AuctionsListPage() {
@@ -53,7 +54,16 @@ export function AuctionsListPage() {
 	};
 
 	if (isLoading && !data) {
-		return <AuctionsListSkeleton />;
+		return (
+			<div>
+				<FiltersSkeleton />
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+					{Array.from({ length: 6 }).map((_, i) => (
+						<SkeletonCard key={i} />
+					))}
+				</div>
+			</div>
+		);
 	}
 
 	if (isError) {
