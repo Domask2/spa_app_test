@@ -1,14 +1,15 @@
 import { Link, useParams } from '@tanstack/react-router';
-import { Skeleton } from "../../shared/ui/Skeleton.tsx";
 import { PlaceBetForm } from "./components/PlaceBetForm.tsx";
 import { useAuctionDetail } from "../../features/auction/api/useAuctionDetail.ts";
 import { AuctionInfo } from "./components/AuctionInfo.tsx";
+import { DetailSkeleton } from "./components/DetailSkeleton.tsx";
 
 export function AuctionDetailPage() {
 	const {auctionUuid} = useParams({from: '/auctions/$auctionUuid'});
 	const {data: auction, isLoading, isError, refetch} = useAuctionDetail(auctionUuid);
 
-	if (isLoading) return <Skeleton count={6}/>;
+	if (isLoading) return <DetailSkeleton/>;
+
 	if (isError || !auction) {
 		return (
 			<div className="text-center py-10">
@@ -29,15 +30,13 @@ export function AuctionDetailPage() {
 		status,
 	} = auction;
 
-	// Можно ли делать ставку (только для активных аукционов)
 	const canPlaceBet = canSetBet && status === 'active';
 	const isClosedOrCancelled = status === 'closed' || status === 'cancelled';
-
-	// История видна, если не скрыта (независимо от статуса аукциона)
 	const showBetsHistory = !hideBetsHistory;
 
 	return (
 		<div className="space-y-6">
+
 			{/* Кнопка "Назад" */}
 			<div className="flex items-center gap-4">
 				<Link
@@ -50,18 +49,21 @@ export function AuctionDetailPage() {
 					</svg>
 					Назад к списку
 				</Link>
+
 				<span className="text-sm text-gray-500">
-          Аукцион #{auction.cargoNum}
-        </span>
+          			Аукцион #{auction.cargoNum}
+        		</span>
+
 				{canPlaceBet && (
 					<span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full ml-auto">
-            🟢 Можно делать ставку
-          </span>
+            	 		Можно делать ставку
+          			</span>
 				)}
+
 				{isClosedOrCancelled && (
 					<span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full ml-auto">
-            {status === 'closed' ? '🔒 Аукцион завершён' : '🚫 Аукцион отменён'}
-          </span>
+            			{status === 'closed' ? 'Аукцион завершён' : 'Аукцион отменён'}
+          			</span>
 				)}
 			</div>
 
@@ -118,7 +120,7 @@ export function AuctionDetailPage() {
 						</p>
 						{!hideBetsHistory && (
 							<p className="text-sm text-blue-600 mt-2">
-								📊 История ставок доступна для просмотра
+								История ставок доступна для просмотра
 							</p>
 						)}
 					</div>
