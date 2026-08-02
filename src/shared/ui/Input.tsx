@@ -3,15 +3,17 @@ import cn from 'classnames';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	label?: string;
+	id? : string
 	error?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	({label, error, className, ...props}, ref) => {
+	({id, label, error, className, ...props}, ref) => {
 		return (
 			<div>
-				{label && <label className="block text-sm font-medium">{label}</label>}
+				{label && <label htmlFor={id} className="block text-sm font-medium">{label}</label>}
 				<input
+					id={id}
 					ref={ref}
 					className={cn(
 						'mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500',

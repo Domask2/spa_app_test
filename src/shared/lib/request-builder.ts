@@ -5,7 +5,7 @@ export async function requestBuilder(url: string, options: RequestInit = {}): Pr
 		'Content-Type': 'application/json',
 		...options.headers,
 	};
-	const config = {...options, headers};
+	const config = {method: 'GET', ...options, headers};
 	const response = await fetch(fullUrl, config);
 	if (!response.ok) {
 		// глобальная обработка ошибок (опционально)

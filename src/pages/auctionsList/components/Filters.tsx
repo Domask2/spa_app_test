@@ -100,6 +100,7 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 				{/* Номер заявки */}
 				<Input
+					id="cargo_num"
 					label="Номер заявки"
 					value={filters.cargo_num || ''}
 					onChange={handleInputChange('cargo_num')}
@@ -108,8 +109,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Статус */}
 				<div>
-					<label className="block text-sm font-medium">Статус</label>
+					<label htmlFor="status" className="block text-sm font-medium">Статус</label>
 					<select
+						id="status"
 						value={filters.status || ''}
 						onChange={handleSelectChange('status')}
 						className="w-full border rounded text-sm py-1 px-2 h-8 focus:outline-none focus:ring-1 focus:ring-blue-500 mt-1"
@@ -121,8 +123,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Тип аукциона */}
 				<div>
-					<label className="block text-sm font-medium">Тип</label>
+					<label htmlFor="auc_type" className="block text-sm font-medium">Тип</label>
 					<select
+						id="auc_type"
 						value={filters.auc_type || ''}
 						onChange={handleSelectChange('auc_type')}
 						className="w-full border rounded text-sm py-1 px-2 h-8 focus:outline-none focus:ring-1 focus:ring-blue-500 mt-1"
@@ -134,8 +137,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Город погрузки */}
 				<div>
-					<label className="block text-sm font-medium">Город погрузки</label>
+					<label htmlFor="load_city" className="block text-sm font-medium">Город погрузки</label>
 					<select
+						id="load_city"
 						value={filters.load_city || ''}
 						onChange={handleSelectChange('load_city')}
 						className="w-full border rounded text-sm py-1 px-2 h-8 focus:outline-none focus:ring-1 focus:ring-blue-500 mt-1"
@@ -147,6 +151,7 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Дата погрузки от */}
 				<Input
+					id="load_date_from"
 					label="Дата от"
 					type="date"
 					value={filters.load_date_from || ''}
@@ -156,6 +161,7 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Дата погрузки до */}
 				<Input
+					id="load_date_to"
 					label="Дата до"
 					type="date"
 					value={filters.load_date_to || ''}
@@ -165,8 +171,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Город выгрузки */}
 				<div>
-					<label className="block text-sm font-medium">Город выгрузки</label>
+					<label htmlFor="unload_city" className="block text-sm font-medium">Город выгрузки</label>
 					<select
+						id="unload_city"
 						value={filters.unload_city || ''}
 						onChange={handleSelectChange('unload_city')}
 						className="w-full border rounded text-sm py-1 px-2 h-8 focus:outline-none focus:ring-1 focus:ring-blue-500 mt-1"
@@ -178,8 +185,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Цена от */}
 				<div>
-					<label className="block text-sm font-medium">Цена от</label>
+					<label htmlFor="price_from" className="block text-sm font-medium">Цена от</label>
 					<input
+						id="price_from"
 						type="number"
 						value={filters.price_from ?? ''}
 						onChange={handleInputChange('price_from')}
@@ -194,8 +202,9 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 
 				{/* Цена до */}
 				<div>
-					<label className="block text-sm font-medium">Цена до</label>
+					<label htmlFor="price_to" className="block text-sm font-medium">Цена до</label>
 					<input
+						id="price_to"
 						type="number"
 						value={filters.price_to ?? ''}
 						onChange={handleInputChange('price_to')}
@@ -211,23 +220,25 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 				{/* Доступен */}
 				<div className="flex items-center space-x-2 pt-1">
 					<input
+						id="is_available"
 						type="checkbox"
 						checked={!!filters.is_available}
 						onChange={handleCheckboxChange('is_available')}
 						className="h-4 w-4"
 					/>
-					<label className="text-sm">Доступен</label>
+					<label htmlFor="is_available" className="text-sm">Доступен</label>
 				</div>
 
 				{/* Участвую */}
 				<div className="flex items-center space-x-2 pt-1">
 					<input
+						id="is_bidder"
 						type="checkbox"
 						checked={!!filters.is_bidder}
 						onChange={handleCheckboxChange('is_bidder')}
 						className="h-4 w-4"
 					/>
-					<label className="text-sm">Участвую</label>
+					<label htmlFor="is_bidder" className="text-sm">Участвую</label>
 				</div>
 			</div>
 
