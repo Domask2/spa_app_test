@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { type FilterValues } from '../model/filters.schema';
 import { Input } from '../../../shared/ui/Input';
 import { Button } from "../../../shared/ui/Button.tsx";
@@ -16,7 +16,13 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 	const [filters, setFilters] = useState<FilterValues>(initialFilters);
 	const [errors, setErrors] = useState<{ price_from?: string; price_to?: string }>({});
 
+	const isFirstRender = useRef(true);
+
 	useEffect(() => {
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return;
+		}
 		setFilters(initialFilters);
 	}, [initialFilters]);
 
@@ -52,13 +58,12 @@ export function Filters({initialFilters, onChange}: FiltersProps) {
 				price_from: field === 'price_from' ? fieldError || rangeError : undefined,
 				price_to: field === 'price_to' ? fieldError || rangeError : undefined,
 			});
-			// Если есть ошибки, не применяем фильтр
+
 			if (fieldError || rangeError) {
 				return;
 			}
 		}
 
-		// Если ошибок нет, применяем фильтр
 		onChange(newFilters);
 	};
 
